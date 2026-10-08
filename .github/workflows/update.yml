@@ -8,6 +8,8 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -15,7 +17,7 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: python -m src.build --start 1999 --end $(date +%Y)
-      - run: pytest -q
+      - run: python -m pytest -q
       - name: Commit updated datasets
         run: |
           git config user.name 'github-actions[bot]'
