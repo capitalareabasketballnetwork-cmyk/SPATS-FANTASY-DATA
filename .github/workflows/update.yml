@@ -17,10 +17,11 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: python -m src.build --start 1999 --end $(date +%Y)
+      - run: python -m src.matchups
       - run: python -m pytest -q
       - name: Commit updated datasets
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/
-          git diff --cached --quiet || (git commit -m 'Update player statistics and fantasy scoring' && git push)
+          git diff --cached --quiet || (git commit -m 'Update player statistics, fantasy scoring and defensive matchups' && git push)
